@@ -13,7 +13,7 @@
 #include <chrono>
 #include <thread>
 
-const int ENNAKKO = 55;
+const int ENNAKKO = 56;
 
 void displayMe(void)
 {
