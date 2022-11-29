@@ -1,10 +1,11 @@
-#elfwalker
+# elfwalker
 
-Is a simple physics simulation with AI controlled "elf" walks on the screen.
+Is a simple physics simulator where AI controlled body walks on the screen.
 
 ## Features
 
-- Genetic algorithm for walking
+- A simple body consist of three polygon
+- Genetic algorithm for making moves for walking
 - Realistic physics
 - Fractal terrain
 - OpenGL graphics
