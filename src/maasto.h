@@ -5,7 +5,7 @@
 #define VUORISTO_H_INCLUDED
 
 /**
-    Fraktaalivuoristo
+    Fraktaaleista koostuva maasto.
 */
 const double ALAPIIRTORAJA=-1;
 
@@ -14,20 +14,18 @@ struct korkeusJaKaltevuus {
     double kaltevuus;
 };
 
-//static double epatas[] = {1, 2, 5, 2, 4, 2, 50};
-
-class Vuoristo {
+class Maasto {
 
     public:
 
-        Vuoristo(double x1, double y1, double x2, double y2,
+        Maasto(double x1, double y1, double x2, double y2,
                 double epatasaisuus):
                 vasenP(NULL), oikeaP(NULL),
                 x1(x1), y1(y1), x2(x2), y2(y2),
                 epatasaisuus(epatasaisuus), syvyys(0)
                 {}
 
-        Vuoristo(double x1, double y1, double x2, double y2,
+        Maasto(double x1, double y1, double x2, double y2,
                 double epatasaisuus, int syvyys):
                 vasenP(NULL), oikeaP(NULL),
                 x1(x1), y1(y1), x2(x2), y2(y2),
@@ -48,8 +46,8 @@ class Vuoristo {
 
     private:
 
-        Vuoristo *vasenP;
-        Vuoristo *oikeaP;
+        Maasto *vasenP;
+        Maasto *oikeaP;
 
         /** Jakaa osan, ja palauttaa taulukkona vasemman ja oikean puolen. */
         struct vuoristoJako jaa();

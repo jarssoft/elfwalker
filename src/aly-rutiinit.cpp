@@ -4,7 +4,7 @@
 #include <iostream>
 #include <math.h>
 #include <assert.h>
-#include "aly.h"
+#include "aly-rutiinit.h"
 
 namespace tekoaly {
 

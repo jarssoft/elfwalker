@@ -3,15 +3,15 @@
 #include <cstdlib>
 #include <GL/gl.h>
 #include <assert.h>
-#include "vuoristo.h"
-#include "mate.h"
+#include "maasto.h"
+#include "fys-rutiinit.h"
 
 struct vuoristoJako {
-    Vuoristo *vasen;
-    Vuoristo *oikea;
+    Maasto *vasen;
+    Maasto *oikea;
 };
 
-void Vuoristo::toString(){
+void Maasto::toString(){
 
     using namespace std;
     cout << "-- Vuoristo --" << endl;
@@ -21,7 +21,7 @@ void Vuoristo::toString(){
 }
 
 //täyttää lookup-taulukon nopeampaa hakua varten
-void Vuoristo::makeLU(const int resoluutio, const int syvyys)
+void Maasto::makeLU(const int resoluutio, const int syvyys)
 {
     lookup_askel = (x2-x1) / resoluutio;
     index_askel = 1.0 / lookup_askel;
@@ -32,7 +32,7 @@ void Vuoristo::makeLU(const int resoluutio, const int syvyys)
     }
 }
 
-struct korkeusJaKaltevuus Vuoristo::getKorkeusLU(float x)
+struct korkeusJaKaltevuus Maasto::getKorkeusLU(float x)
 {
     if(x<x1){
         return lookup.front();
@@ -52,7 +52,7 @@ struct korkeusJaKaltevuus Vuoristo::getKorkeusLU(float x)
     return lookup.at(i);
 }
 
-struct vuoristoJako Vuoristo::jaa(){
+struct vuoristoJako Maasto::jaa(){
 
     using namespace std;
 
@@ -67,8 +67,8 @@ struct vuoristoJako Vuoristo::jaa(){
 
         double yv=(y1+y2)/2+muutos;
 
-        vasenP = new Vuoristo(x1,y1,xv,yv,epatasaisuus/2);
-        oikeaP = new Vuoristo(xv,yv,x2,y2,epatasaisuus/2);
+        vasenP = new Maasto(x1,y1,xv,yv,epatasaisuus/2);
+        oikeaP = new Maasto(xv,yv,x2,y2,epatasaisuus/2);
     }
 
     //Vuoristo *vasen = *vasenP;
@@ -100,7 +100,7 @@ struct vuoristoJako Vuoristo::jaa(){
 
 }
 
-void Vuoristo::piirra(int syv){
+void Maasto::piirra(int syv){
 
     int syvyys=syv-1;
     if(syvyys>0){
@@ -143,7 +143,7 @@ double yksikkovektori_j(double i, double j){
 
 }
 
-struct korkeusJaKaltevuus Vuoristo::getKorkeus(float x, int syv){
+struct korkeusJaKaltevuus Maasto::getKorkeus(float x, int syv){
 
     int syvyys = syv - 1;
     if(syvyys>0){

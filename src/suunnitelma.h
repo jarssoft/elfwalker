@@ -1,25 +1,18 @@
 #ifndef LIIKETAULUKKO_H_INCLUDED
 #define LIIKETAULUKKO_H_INCLUDED
 
-#include "aly.h"
-#include "tekoaly.h"
+#include "aly-rutiinit.h"
 
 namespace tekoaly {
     /**
-    Taulukko, joka sis‰lt‰‰ agentin kaikkien
-    lihaksien liikkeet tietyll‰ aikav‰lill‰.
-    Sis‰lt‰‰ geneettisen p‰‰ttelij‰n, joka tallentaa
-    onnistuneet suunnitelmat iteratiivisesti
-    uusiin taulukoihin.
-
-    Optimointikeinot:
-    - Mutatoitavien sisarusten m‰‰r‰ riippuu yhteisest‰ menestyksest‰.
+    Suunnitelma on sekvenssi agentin kaikkien lihaksien liikkeist‰ tietyll‰ aikav‰lill‰.
+    Sis‰lt‰‰ geneettisen p‰‰ttelij‰n, joka tallentaa onnistuneet suunnitelmat.
     */
-    class Liiketaulukko {
+    class Suunnitelma {
 
         public:
 
-            Liiketaulukko(int sis, int van);
+            Suunnitelma(int sis, int van);
 
             /** Ottaa k‰yttˆˆn seuraavan vanhemmasta mutatoidun vaihtoehdon,
                 ja lopulta parhaaksi katsotun, lopullisen tuloksen.
@@ -36,9 +29,6 @@ namespace tekoaly {
                 Huom: Toimii vain getLihas-kutsun j‰lkeen. */
             void arvostele(double arvosana);
 
-            /** Tallentaa parhaan tuloksen Som-kartalle. */
-            void tallennaSomiin();
-
             /** Ottaa seuraavan ajanjakson suunniteltavaksi.
                 Siirtyy halutun m‰‰r‰n soluissa eteenp‰in. */
             void addTime(double siirtyma);
@@ -49,12 +39,10 @@ namespace tekoaly {
             void setTime(double uusi_aika);
 
             /** Palauttaa ylimm‰n taulukon, jossa paras tulos. */
-            Liiketaulukko* getYlin();
+            Suunnitelma* getYlin();
 
             /** Poistaa dynaamisessa muistissa olevat tiedot. */
             void poista();
-
-            double lihakset[KOKO][LIHAKSET];
 
         private:
 
@@ -64,11 +52,13 @@ namespace tekoaly {
             /** Vie taulukon sis‰llˆn vanhemmalle. */
             void vieVanhemmalle();
 
+            double lihakset[KOKO][LIHAKSET];
+
             /** Kuinka mones sisarus on k‰ytˆss‰? */
             int sisarus;
 
             /** Taulukko, jossa s‰ilytet‰‰n onnistunutta versiota. */
-            Liiketaulukko *vanhempi;
+            Suunnitelma *vanhempi;
 
             /** Kuinka monta sisarusta k‰ytet‰‰n? */
             int sisarukset;

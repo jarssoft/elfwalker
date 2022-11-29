@@ -1,11 +1,9 @@
 #include <assert.h>
 #include <iostream>
-
-#include "tekoaly.h"
-#include "liiketaulukko.h"
+#include "suunnitelma.h"
 
 namespace tekoaly {
-    Liiketaulukko::Liiketaulukko(int sis, int van){
+    Suunnitelma::Suunnitelma(int sis, int van){
 
         //using namespace std;
         //cout << "Alustettiin " << lihas1[2] << endl;
@@ -28,8 +26,8 @@ namespace tekoaly {
         }else{
             //Liiketaulukko uusivanhempi(sis, van-1);
             //vanhempi = &uusivanhempi;
-            Liiketaulukko *uusivanhempi;
-            uusivanhempi = new Liiketaulukko(sis, van-1);
+            Suunnitelma *uusivanhempi;
+            uusivanhempi = new Suunnitelma(sis, van-1);
             vanhempi = uusivanhempi;
             vanhempi->onAlin=false;
             //Liiketaulukko* new(sis,van-1);
@@ -38,22 +36,22 @@ namespace tekoaly {
         }
     }
 
-    void Liiketaulukko::poista(){
+    void Suunnitelma::poista(){
         tila = POISTETTU;
         if(syvyys>0)
             vanhempi->poista();
         delete vanhempi;
     }
 
-    void Liiketaulukko::palautaVanhemmalta(){
+    void Suunnitelma::palautaVanhemmalta(){
         copyArray(vanhempi->lihakset, lihakset);
     }
 
-    void Liiketaulukko::vieVanhemmalle(){
+    void Suunnitelma::vieVanhemmalle(){
         copyArray(lihakset, vanhempi->lihakset);
     }
 
-    Liiketaulukko* Liiketaulukko::getYlin(){
+    Suunnitelma* Suunnitelma::getYlin(){
         if(syvyys==1){
             vanhempi->tila=VALMIS;
             return vanhempi;
@@ -62,7 +60,7 @@ namespace tekoaly {
             return vanhempi->getYlin();
     }
 
-    bool Liiketaulukko::next(){
+    bool Suunnitelma::next(){
 
         sisarus++;
 
@@ -112,7 +110,7 @@ namespace tekoaly {
         return true;
     }
 
-    double Liiketaulukko::getLihas(double h_aika, int lihasNro){
+    double Suunnitelma::getLihas(double h_aika, int lihasNro){
 
         const double l_aika = (h_aika-aika)/10+aikakorjaus;
 
@@ -135,7 +133,7 @@ namespace tekoaly {
 
     }
 
-    void Liiketaulukko::arvostele(double arv){
+    void Suunnitelma::arvostele(double arv){
 
         assert(tila==LUETTU);
         arvosana=arv;
@@ -143,7 +141,7 @@ namespace tekoaly {
 
     }
 
-    void Liiketaulukko::addTime(double siirtyma){
+    void Suunnitelma::addTime(double siirtyma){
 
         aikakorjaus+=siirtyma;
         while(aikakorjaus>0.999999){
@@ -156,7 +154,7 @@ namespace tekoaly {
         //alustaArray(lihakset);
     }
 
-    void Liiketaulukko::setTime(
+    void Suunnitelma::setTime(
             double uusi_aika){
 
         double ero = uusi_aika - aika;

@@ -1,10 +1,13 @@
-#include "vuoristo.h"
+#include "maasto.h"
 
 #ifndef PISTE_H_INCLUDED
 #define PISTE_H_INCLUDED
 
 namespace fysiikka {
 
+    /** Kappaleen kaksiulotteinen piste, jolla on nopeus.
+        On vuorovaikutuksessa muihin pisteisiin.
+        Kappale koostuu pisteist‰ ja vuorovaikutuksista. */
     class Piste {
         public:
             Piste(double x=0, double y=0);
@@ -23,14 +26,10 @@ namespace fysiikka {
                 m‰‰ritell‰‰n suorana origon kautta kulkevana funktiona. */
             void teeMaaVuorovaikutus(double kaltevuus, double korkeus, double aika);
             /** Laskee vuorovaikutuksen vuoristoon. */
-            void teeMaaVuorovaikutus(Vuoristo& vuoristo, double aika);
+            void teeMaaVuorovaikutus(Maasto& vuoristo, double aika);
 
             double getX();
             double getY();
-
-            //Aisti
-            double getKulma(Piste piste);
-            double getPaine();
             double getYNopeus();
             double getXNopeus();
 

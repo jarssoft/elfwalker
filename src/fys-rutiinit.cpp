@@ -1,6 +1,6 @@
 #include <cmath>
 #include <iostream>
-#include "mate.h"
+#include "fys-rutiinit.h"
 
 /** Vastaa fysiikan laskemisesta. */
 

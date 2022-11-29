@@ -11,7 +11,7 @@ namespace fysiikka {
 
     int flop=0;
 
-    FyysinenMaailma::FyysinenMaailma(tekoaly::Liiketaulukko* lt, Vuoristo* vuor){
+    FyysinenMaailma::FyysinenMaailma(tekoaly::Suunnitelma* lt, Maasto* vuor){
 
         liiketaulukko=lt;
         vuoristo=vuor;
@@ -39,13 +39,13 @@ namespace fysiikka {
         pisteet.push_back(&piste4);
         pisteet.push_back(&piste5);
 
-        sidos1=new Sidos(piste1, piste4, 0.16);
-        sidos3=new Sidos(piste1, piste3, 0.16);
-        sidos4=new Sidos(piste2, piste4, 0.16);
-        sidos5=new Sidos(piste3, piste4, 0.16);
-        sidos6=new Sidos(piste2, piste3, 0.16);
-        sidos7=new Sidos(piste5, piste3, 0.16);
-        sidos8=new Sidos(piste5, piste4, 0.16);
+        sidos1=new Vuorovaikutus(piste1, piste4, 0.16);
+        sidos3=new Vuorovaikutus(piste1, piste3, 0.16);
+        sidos4=new Vuorovaikutus(piste2, piste4, 0.16);
+        sidos5=new Vuorovaikutus(piste3, piste4, 0.16);
+        sidos6=new Vuorovaikutus(piste2, piste3, 0.16);
+        sidos7=new Vuorovaikutus(piste5, piste3, 0.16);
+        sidos8=new Vuorovaikutus(piste5, piste4, 0.16);
 
         sidokset.clear();
         sidokset.push_back(sidos1);
@@ -161,7 +161,7 @@ namespace fysiikka {
 
             //pisteiden vuorovaikutus eli vetovoima
             assert(sidokset.size()==7);
-            for(std::list<fysiikka::Sidos*>::iterator it = sidokset.begin();
+            for(std::list<fysiikka::Vuorovaikutus*>::iterator it = sidokset.begin();
                     it != sidokset.end(); ++it){
                 (*it)->teeVuorovaikutus();
             }

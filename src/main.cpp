@@ -5,10 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <GL/glut.h>
-#include "liiketaulukko.h"
-#include "aly.h"
-#include "tekoaly.h"
-#include "vuoristo.h"
+#include "suunnitelma.h"
+#include "aly-rutiinit.h"
+#include "maasto.h"
 #include "fyysinenmaailma.h"
 #include <chrono>
 #include <thread>
@@ -21,7 +20,7 @@ void displayMe(void)
 
     srand(time(NULL));
 
-    tekoaly::Liiketaulukko koetaulukko(2, 6); // 4, 4
+    tekoaly::Suunnitelma koetaulukko(2, 6); // 4, 4
 
     //double aistit[tekoaly::KOKO][tekoaly::LIHAKSET];
     //tekoaly::taytaArray(aistit, 0.5);
@@ -32,7 +31,7 @@ void displayMe(void)
     //double random=((double)rand()/RAND_MAX-0.5)*0.1;
     //Vuoristo vuoristo(-1.05+random, -1, 1, -0.6, 0.45);
     //Vuoristo vuoristo(-1, -0.6, 1, -0.6, 0.45);
-    Vuoristo vuoristo(-1, -0.6, 1, -0.6, 0.15);
+    Maasto vuoristo(-1, -0.6, 1, -0.6, 0.15);
     vuoristo.makeLU(1000, 6);
 
     fysiikka::FyysinenMaailma maailma(&koetaulukko, &vuoristo);

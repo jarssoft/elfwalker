@@ -1,4 +1,4 @@
-#include "sidos.h"
+#include "vuorovaikutus.h"
 
 #ifndef LIHAS_H_INCLUDED
 #define LIHAS_H_INCLUDED
@@ -8,14 +8,14 @@ namespace fysiikka {
     class Lihas {
 
         public:
-            Lihas(fysiikka::Sidos &sidos, double kerroin) :
+            Lihas(fysiikka::Vuorovaikutus &sidos, double kerroin) :
                     sidos(sidos),
                     min_etaisyys(sidos.getEtaisyys() - kerroin * sidos.getEtaisyys() / 2),
                     kerroin(kerroin) {}
             void setArvo(double et);
 
         private:
-            fysiikka::Sidos &sidos;
+            fysiikka::Vuorovaikutus &sidos;
             double min_etaisyys, kerroin;
     };
 }

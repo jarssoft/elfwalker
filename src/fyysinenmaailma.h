@@ -1,11 +1,10 @@
 #include <list>
 #include "piste.h"
-#include "sidos.h"
+#include "vuorovaikutus.h"
 #include "lihas.h"
 #include "poly.h"
-#include "aly.h"
-#include "liiketaulukko.h"
-#include "tekoaly.h"
+#include "aly-rutiinit.h"
+#include "suunnitelma.h"
 
 #ifndef FYSMAAILM_H_INCLUDED
 #define FYSMAAILM_H_INCLUDED
@@ -23,7 +22,7 @@ namespace fysiikka {
 
         public:
 
-            FyysinenMaailma(tekoaly::Liiketaulukko* liiketaulukko, Vuoristo* vuor);
+            FyysinenMaailma(tekoaly::Suunnitelma* liiketaulukko, Maasto* vuor);
 
             /** Palauttaa todellisen ajan. */
             void currentTime();
@@ -38,11 +37,8 @@ namespace fysiikka {
             /** Piirt‰‰ ruudulle maailman polygonit ym. */
             void piirra();
 
-            /** M‰‰r‰, jolla teko‰ly‰ palkitaan. */
+            /** Hyvyysfunktio, joka palauttaa teko‰lyn suorituksen arvostelun. */
             double fitness(bool todellisuus);
-
-            /** Palauttaa aistitiedot.*/
-            void getAistit(double aistit[tekoaly::KOKO][tekoaly::LIHAKSET]);
 
             /** Asettaa lihakset halutun liiketaulukon mukaisesti. */
             void setLihakset();
@@ -60,8 +56,8 @@ namespace fysiikka {
             Piste piste1, piste2, piste3, piste4, piste5;
             std::list<Piste*> pisteet;
 
-            Sidos *sidos1, *sidos2, *sidos3, *sidos4, *sidos5, *sidos6, *sidos7, *sidos8;
-            std::list<Sidos*> sidokset;
+            Vuorovaikutus *sidos1, *sidos2, *sidos3, *sidos4, *sidos5, *sidos6, *sidos7, *sidos8;
+            std::list<Vuorovaikutus*> sidokset;
 
             Lihas *lihas1, *lihas2, *lihas3, *lihas4, *lihas5, *lihas6, *lihas7, *lihas8;
             std::list<Lihas*> lihakset;
@@ -69,10 +65,10 @@ namespace fysiikka {
             Poly *poly1, *poly2, *poly3;
             std::list<Poly*> polyt;
 
-            tekoaly::Liiketaulukko *liiketaulukko;
-            Vuoristo *vuoristo;
+            tekoaly::Suunnitelma *liiketaulukko;
+            Maasto *vuoristo;
 
-            double kerroin =1;
+            double kerroin = 1;
 
     };
 }

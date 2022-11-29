@@ -5,6 +5,8 @@
 
 namespace fysiikka {
 
+    /** Fysiikan funktioita.*/
+
     // Laskee kahden pisteen välisen etäisyyden (Pythagoraan lause)
     double inline distance(double dX0, double dY0, double dX1, double dY1)
     {

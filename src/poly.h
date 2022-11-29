@@ -3,6 +3,7 @@
 #ifndef POLY_H_INCLUDED
 #define POLY_H_INCLUDED
 
+/** Polygonin esitys piirtämistä varten. */
 class Poly {
     public:
         Poly(fysiikka::Piste &p1, fysiikka::Piste &p2, fysiikka::Piste &p3,

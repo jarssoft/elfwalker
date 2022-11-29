@@ -1,8 +1,8 @@
 #include <math.h>
 #include <iostream>
-#include "mate.h"
+#include "fys-rutiinit.h"
 #include "piste.h"
-#include "vuoristo.h"
+#include "maasto.h"
 
 namespace fysiikka {
 
@@ -16,24 +16,6 @@ namespace fysiikka {
 
     /* Fysiikan perusyksikkö. */
     void Piste::teeVuorovaikutus(Piste &piste, double &etaisyys, double voimakerroin) {
-
-        /*
-        //double e = distance(koord.p.x, koord.p.y, piste.koord.p.x, piste.koord.p.y);
-        double v = voima(koord.p.x, koord.p.y, piste.koord.p.x, piste.koord.p.y, etaisyys) * voimakerroin;
-        double k = angle(koord.p.x, koord.p.y, piste.koord.p.x, piste.koord.p.y);
-
-        //suuri voima muuttaa etäisyyttä
-        //if(etaisyys<e-taittuvuus) etaisyys=e-taittuvuus;
-        //if(etaisyys>e+taittuvuus) etaisyys=e+taittuvuus;
-
-        //voimat eri koordinaateille
-        double xv = v * cos(k);
-        double yv = v * sin(k);
-
-        //using namespace std;
-        //cout << "Distance = " <<
-        //        distance(0.0, 0.0, 0.0, 1.0) << endl;
-        */
 
         const double etx = piste.koord.p.x - koord.p.x;
         const double ety = piste.koord.p.y - koord.p.y;
@@ -100,7 +82,7 @@ namespace fysiikka {
         teeMaaVuorovaikutusY(kaltevuus, korkeus + koord.p.x * kaltevuus + 0.2, aika);
     }
 
-    void Piste::teeMaaVuorovaikutus(Vuoristo& vuoristo, double aika){
+    void Piste::teeMaaVuorovaikutus(Maasto& vuoristo, double aika){
         teeMaaVuorovaikutusY(vuoristo.getKorkeusLU(koord.p.x), aika);
     }
 
@@ -119,17 +101,7 @@ namespace fysiikka {
         return koord.p.y;
     }
 
-    double Piste::getKulma(Piste piste){
-        return angle(koord.p.x, koord.p.y, piste.koord.p.x, piste.koord.p.y);
-    }
 
-    double Piste::getPaine(){
-        if(paine>-10 && paine<10){
-            return paine;
-        }else{
-            return -10;
-        }
-    }
 
     double Piste::getXNopeus(){
         return koord.n.x;
