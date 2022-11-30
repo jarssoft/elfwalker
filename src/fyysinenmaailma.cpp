@@ -146,14 +146,10 @@ namespace fysiikka {
 
          double kulutus = energia - alkuenergia;
 
-         double vaaka = (piste5.getX() + piste2.getX() + piste1.getX()) * 0.75 +
-                        (piste5.getX() + piste2.getXNopeus() + piste1.getXNopeus()) * 0.25;
+         double vaaka = painopiste*3 + piste2.getX() + piste1.getX();
 
          if(todellisuus){
-             std::cout << tasapaino << ", " << kulutus << ", " << vaaka << std::endl;
-         }
-
-         if(todellisuus){
+             std::cout << tasapaino << ", " << kulutus << ", " << vaaka << ", " << piste1.getXNopeus() << std::endl;
              if(vaaka>0.8){
                  kerroin=-1;
              }
