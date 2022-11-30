@@ -71,10 +71,10 @@ namespace fysiikka {
             koord.n.x += paine * 0.4 * (-kaltevuus) * aika;
 
             // Lepo vai liikekitka
-            double kitkakerroin=2/fabs(koord.n.x);
+            double kitkakerroin=5/fabs(koord.n.x);
             double kitkavoina = 1 + paine * kitkakerroin;
 
-            koord.n.x /= (kitkavoina * aika / (1 - abs(kaltevuus)));
+            //koord.n.x /= (kitkavoina * aika / (1 - abs(kaltevuus)));
         }
     }
 
