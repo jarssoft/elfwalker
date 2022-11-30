@@ -41,12 +41,9 @@ namespace fysiikka {
     }
 
     const double ILMAKITKA = 0.975;
+    const double MAAKITKA = 0.9;
 
     void Piste::paivitaSijainti(double aika){
-
-        //lisätään nopeus koordinaatteihin
-        koord.p.x+=koord.n.x*aika;
-        koord.p.y+=koord.n.y*aika;
 
         //Kitka lämpöliikkeen hidastamiseksi
         koord.n.x*=ILMAKITKA;
@@ -54,6 +51,10 @@ namespace fysiikka {
 
         //painovoima
         koord.n.y-=0.0001*0.15;
+
+        //lisätään nopeus koordinaatteihin
+        koord.p.x+=koord.n.x*aika;
+        koord.p.y+=koord.n.y*aika;
     }
 
     void Piste::teeMaaVuorovaikutusY(korkeusJaKaltevuus kjk, double aika){
@@ -71,8 +72,12 @@ namespace fysiikka {
             koord.n.x += paine * 0.4 * (-kaltevuus) * aika;
 
             // Lepo vai liikekitka
-            double kitkakerroin=5/fabs(koord.n.x);
-            double kitkavoina = 1 + paine * kitkakerroin;
+            //double kitkakerroin=5/fabs(koord.n.x);
+            //double kitkavoina = 1 + paine * kitkakerroin;
+
+            //Kitka maansisällä
+            koord.n.x*=MAAKITKA;
+            koord.n.y*=MAAKITKA;
 
             //koord.n.x /= (kitkavoina * aika / (1 - abs(kaltevuus)));
         }

@@ -29,7 +29,7 @@ namespace fysiikka {
             Vuorovaikutus(Piste &p1, Piste &p2,  double vo) :
                     piste1(p1), piste2(p2),
                     t_etaisyys(distance(p1.getX(), p1.getY(), p2.getX(), p2.getY())),
-                    t_voima(vo * 0.01)
+                    t_voima(vo * 0.1)
             {}
 
             void teeVuorovaikutus();

@@ -21,7 +21,7 @@ namespace fysiikka {
         energia=0;
         alkuenergia=0;
 
-        double y=-0.5, x=-0.8;
+        const double y=-0.5, x=-0.8;
 
         alkupiste1=*new Piste(0.1+x, 0.0+y);
         alkupiste2=*new Piste(0.4+x, 0.0+y);
@@ -146,12 +146,12 @@ namespace fysiikka {
 
          double kulutus = energia - alkuenergia;
 
-         if(todellisuus){
-             std::cout << tasapaino << ", " << kulutus << std::endl;
-         }
-
          double vaaka = (piste5.getX() + piste2.getX() + piste1.getX()) * 0.75 +
                         (piste5.getX() + piste2.getXNopeus() + piste1.getXNopeus()) * 0.25;
+
+         if(todellisuus){
+             std::cout << tasapaino << ", " << kulutus << ", " << vaaka << std::endl;
+         }
 
          if(todellisuus){
              if(vaaka>0.8){
@@ -162,7 +162,7 @@ namespace fysiikka {
              }
          }
 
-         return  tasapaino + kulutus * (-0.001);// + vaaka * kerroin;
+         return  tasapaino + kulutus * (-0.001) + vaaka * kerroin;
      }
 
      void FyysinenMaailma::makePhysics(const float resoluutio){
@@ -184,9 +184,9 @@ namespace fysiikka {
             //pisteiden sijainnin päivittäminen
             std::list<fysiikka::Piste*>::const_iterator p;
             p = pisteet.begin();
-            while(p != pisteet.end()) {
-                (*p)->paivitaSijainti(liike);
+            while(p != pisteet.end()) {                
                 (*p)->teeMaaVuorovaikutus(*vuoristo, 1);
+                (*p)->paivitaSijainti(liike);
                 p++;
             }
 
