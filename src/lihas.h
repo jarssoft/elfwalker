@@ -8,10 +8,10 @@ namespace fysiikka {
     class Lihas {
 
         public:
-            Lihas(fysiikka::Vuorovaikutus &sidos, double kerroin) :
-                    sidos(sidos),
-                    min_etaisyys(sidos.getEtaisyys() - kerroin * sidos.getEtaisyys() / 2),
-                    kerroin(kerroin) {}
+            Lihas(fysiikka::Vuorovaikutus &vuorovaikutus, double kerroin) :
+                    sidos(vuorovaikutus),
+                    min_etaisyys(vuorovaikutus.getEtaisyys() * (1.0 - kerroin)),
+                    kerroin(kerroin*2) {}
             void setArvo(double et);
 
         private:

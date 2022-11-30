@@ -14,19 +14,23 @@ namespace fysiikka {
         public:
             Vuorovaikutus(Piste &p1, Piste &p2) :
                     piste1(p1), piste2(p2),
-                    t_etaisyys(1.0), t_voima(1.0 * 0.01) {}
+                    t_etaisyys(1.0),
+                    t_voima(1.0 * 0.01)
+            {}
 
             Vuorovaikutus(Piste &p1, Piste &p2, double et, double vo) :
                     piste1(p1), piste2(p2),
                     t_etaisyys(et),
-                    t_voima(vo * 0.01) {
+                    t_voima(vo * 0.01)
+            {
                 std::cout << et << " " << distance(p1.getX(), p1.getY(), p2.getX(), p2.getY()) << std::endl;
             }
 
             Vuorovaikutus(Piste &p1, Piste &p2,  double vo) :
                     piste1(p1), piste2(p2),
                     t_etaisyys(distance(p1.getX(), p1.getY(), p2.getX(), p2.getY())),
-                    t_voima(vo * 0.01) {}
+                    t_voima(vo * 0.01)
+            {}
 
             void teeVuorovaikutus();
             void setEtaisyys(double et);
@@ -38,8 +42,11 @@ namespace fysiikka {
 
             void vastavoima(double voimax, double voimay);
 
-            //Näihin pyritään
-            double t_etaisyys, t_voima;
+            // Etäisyys, johon vuorovaikutus pyrkii.
+            double t_etaisyys;
+
+            // Voima, jolla etäisyyteen pyritään.
+            double t_voima;
     };
 }
 
