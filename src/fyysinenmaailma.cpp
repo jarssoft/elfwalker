@@ -13,10 +13,13 @@ namespace fysiikka {
 
     FyysinenMaailma::FyysinenMaailma(tekoaly::Suunnitelma* lt, Maasto* vuor){
 
-        liiketaulukko=lt;
+        suunnitelma=lt;
         vuoristo=vuor;
+
         aika=0;
         alkuaika=0;
+        energia=0;
+        alkuenergia=0;
 
         double y=-0.5, x=-0.8;
 
@@ -39,11 +42,11 @@ namespace fysiikka {
         pisteet.push_back(&piste4);
         pisteet.push_back(&piste5);
 
-        sidos1=new Vuorovaikutus(piste1, piste4, 0.16);
-        sidos3=new Vuorovaikutus(piste1, piste3, 0.16);
-        sidos4=new Vuorovaikutus(piste2, piste4, 0.16);
-        sidos5=new Vuorovaikutus(piste3, piste4, 0.16);
-        sidos6=new Vuorovaikutus(piste2, piste3, 0.16);
+        sidos1=new Vuorovaikutus(piste1, piste4, 0.05);
+        sidos3=new Vuorovaikutus(piste1, piste3, 0.05);
+        sidos4=new Vuorovaikutus(piste2, piste4, 0.05);
+        sidos5=new Vuorovaikutus(piste3, piste4, 0.05);
+        sidos6=new Vuorovaikutus(piste2, piste3, 0.05);
         sidos7=new Vuorovaikutus(piste5, piste3, 0.16);
         sidos8=new Vuorovaikutus(piste5, piste4, 0.16);
 
@@ -56,13 +59,13 @@ namespace fysiikka {
         sidokset.push_back(sidos7);
         sidokset.push_back(sidos8);
 
-        lihas1=new Lihas(*sidos1, 0.0);
-        lihas3=new Lihas(*sidos3, 0.0);
-        lihas4=new Lihas(*sidos4, 0.0);
+        lihas1=new Lihas(*sidos1, 0.05);
+        lihas3=new Lihas(*sidos3, 0.05);
+        lihas4=new Lihas(*sidos4, 0.05);
         lihas5=new Lihas(*sidos5, 0.0);
-        lihas6=new Lihas(*sidos6, 0.0);
-        lihas7=new Lihas(*sidos7, 0.2);
-        lihas8=new Lihas(*sidos8, 0.2);
+        lihas6=new Lihas(*sidos6, 0.05);
+        lihas7=new Lihas(*sidos7, 0.1);
+        lihas8=new Lihas(*sidos8, 0.1);
 
         //list<fysiikka::Lihas*> lihakset;
         lihakset.clear();
@@ -93,6 +96,7 @@ namespace fysiikka {
         piste4.replace(alkupiste4);
         piste5.replace(alkupiste5);
         aika=alkuaika;
+        energia=alkuenergia;
     }
 
     void FyysinenMaailma::set(){
@@ -103,6 +107,7 @@ namespace fysiikka {
         alkupiste4=piste4;
         alkupiste5=piste5;
         alkuaika=aika;
+        alkuenergia=energia;
     }
 
     double FyysinenMaailma::getTime(){
@@ -132,11 +137,21 @@ namespace fysiikka {
      double FyysinenMaailma::fitness(bool todellisuus){
 
          //suositaan pystyasentoa
-         double pysty = (piste5.getY() - piste1.getY()) + (piste5.getY() - piste2.getY());
+         //double pysty = (piste5.getY() - piste1.getY()) + (piste5.getY() - piste2.getY());
          //double pysty = 10 - fabs(piste5.getX() * 2 - (piste1.getX() + piste2.getX()));
 
-         double vaaka = (piste5.getX() + piste2.getX() + piste1.getX())*0.75 +
-                        (piste5.getX() + piste2.getXNopeus() + piste1.getXNopeus())*0.25;
+         double painopiste = (piste3.getX() + piste4.getX() + piste5.getX()) / 3;
+         double tasapaino = std::fmin(painopiste - std::fmin(piste1.getX(),
+                    piste2.getX()), std::fmax(piste1.getX(), piste2.getX()) - painopiste);
+
+         double kulutus = energia - alkuenergia;
+
+         if(todellisuus){
+             std::cout << tasapaino << ", " << kulutus << std::endl;
+         }
+
+         double vaaka = (piste5.getX() + piste2.getX() + piste1.getX()) * 0.75 +
+                        (piste5.getX() + piste2.getXNopeus() + piste1.getXNopeus()) * 0.25;
 
          if(todellisuus){
              if(vaaka>0.8){
@@ -147,7 +162,7 @@ namespace fysiikka {
              }
          }
 
-         return pysty*0.0 + vaaka * kerroin;
+         return  tasapaino + kulutus * (-0.001);// + vaaka * kerroin;
      }
 
      void FyysinenMaailma::makePhysics(const float resoluutio){
@@ -181,12 +196,18 @@ namespace fysiikka {
 
     void FyysinenMaailma::setLihakset(){
         //muutetaan lihaksien toivottua pituutta suunnitelman mukaan
-        int l=0;
-        for(std::list<fysiikka::Lihas*>::iterator it = lihakset.begin();
-                it != lihakset.end(); ++it)
-        {
-            (*it)->setArvo((*liiketaulukko).getLihas(aika, l));
-            l++;
+
+        if((int)aika!=lihasaika){
+            int l=0;
+            for(std::list<fysiikka::Lihas*>::iterator it = lihakset.begin();
+                    it != lihakset.end(); ++it)
+            {
+                (*it)->setArvo((*suunnitelma).getLihas(aika, l));
+                l++;
+                energia += fabs((*suunnitelma).getLihas(aika, l) - 0.5);
+            }
+
+            lihasaika=(int)aika;
         }
     }
 

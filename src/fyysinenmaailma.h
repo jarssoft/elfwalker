@@ -22,7 +22,7 @@ namespace fysiikka {
 
         public:
 
-            FyysinenMaailma(tekoaly::Suunnitelma* liiketaulukko, Maasto* vuor);
+            FyysinenMaailma(tekoaly::Suunnitelma* suunnitelma, Maasto* vuor);
 
             /** Palauttaa todellisen ajan. */
             void currentTime();
@@ -51,6 +51,12 @@ namespace fysiikka {
             /** Ajat frameina. */
             double aika, alkuaika;
 
+            /** Lihaksiin käytetty energia. */
+            double energia, alkuenergia;
+
+            /** Aika, jonka mukaan lihakset on asetettu suunnitelmassa. */
+            int lihasaika;
+
             Piste alkupiste1, alkupiste2, alkupiste3, alkupiste4, alkupiste5;
 
             Piste piste1, piste2, piste3, piste4, piste5;
@@ -65,7 +71,7 @@ namespace fysiikka {
             Poly *poly1, *poly2, *poly3;
             std::list<Poly*> polyt;
 
-            tekoaly::Suunnitelma *liiketaulukko;
+            tekoaly::Suunnitelma *suunnitelma;
             Maasto *vuoristo;
 
             double kerroin = 1;
