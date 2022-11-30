@@ -11,7 +11,6 @@ namespace fysiikka {
         koord.p.y=y;
         koord.n.x=0;
         koord.n.y=0;
-        paine=0;
     }
 
     /* Fysiikan perusyksikkö. */
@@ -41,7 +40,7 @@ namespace fysiikka {
     }
 
     const double ILMAKITKA = 0.975;
-    const double MAAKITKA = 0.9;
+    const double MAAKITKA = 0.6;
 
     void Piste::paivitaSijainti(double aika){
 
@@ -49,8 +48,7 @@ namespace fysiikka {
         koord.n.x*=ILMAKITKA;
         koord.n.y*=ILMAKITKA;
 
-        //painovoima
-        koord.n.y-=0.0001*0.15;
+
 
         //lisätään nopeus koordinaatteihin
         koord.p.x+=koord.n.x*aika;
@@ -62,24 +60,26 @@ namespace fysiikka {
     }
 
     void Piste::teeMaaVuorovaikutusY(double kaltevuus, double maanpintaY, double aika){
+
+        //painovoima
+        koord.n.y-=0.0001*0.10;
+
         if(koord.p.y<maanpintaY){
 
+            //const double lepo = (fabs(koord.n.x) < 0.00009 ? 2 : 1);
+            const double lepo = (1+fabs(koord.n.x)*1000) * (1+fabs(koord.n.x)*1000);
+
+            //Kitka maan sisällä
+            koord.n.x *= MAAKITKA / lepo;
+            koord.n.y *= MAAKITKA / lepo;
+
             // Kuinka suuri voima pinnasta kohdistuu
-            paine = (maanpintaY-koord.p.y) * (maanpintaY-koord.p.y) - 2 * koord.n.y;
+            const double paine = (maanpintaY-koord.p.y) * (maanpintaY-koord.p.y); // - 2 * koord.n.y;
 
             // Kiihtyvyys suuntautuu pinnasta poispäin
             koord.n.y += paine * 0.4 * (1 - abs(kaltevuus)) * aika;
             koord.n.x += paine * 0.4 * (-kaltevuus) * aika;
 
-            // Lepo vai liikekitka
-            //double kitkakerroin=5/fabs(koord.n.x);
-            //double kitkavoina = 1 + paine * kitkakerroin;
-
-            //Kitka maansisällä
-            koord.n.x*=MAAKITKA;
-            koord.n.y*=MAAKITKA;
-
-            //koord.n.x /= (kitkavoina * aika / (1 - abs(kaltevuus)));
         }
     }
 
@@ -106,8 +106,6 @@ namespace fysiikka {
         return koord.p.y;
     }
 
-
-
     double Piste::getXNopeus(){
         return koord.n.x;
     }
@@ -118,10 +116,7 @@ namespace fysiikka {
 
     void Piste::replace(Piste piste){
         this->koord = piste.koord;
-        this->paine = piste.paine;
     }
-
-
 
     /*
     int main(int argc, char **argv){

@@ -37,8 +37,6 @@ namespace fysiikka {
 
         private:
 
-            double paine;
-
             struct{
                 struct{
                     double x, y;
